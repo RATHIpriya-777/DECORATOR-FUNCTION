@@ -19,3 +19,4 @@ if response.status_code == 201:
     print(response.json())
 else:
     print(f"Failed with status code: {response.status_code}")
+    

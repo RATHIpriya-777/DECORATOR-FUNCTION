@@ -97,4 +97,4 @@ Widely used in real-world Python applications such as:
 
 	Performance analysis
 
-	Monitoring the time calculation 
+	Monitoring the time calculation.

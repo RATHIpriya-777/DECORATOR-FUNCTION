@@ -8,31 +8,27 @@ def do(method, id=None, data=None):
     if id is not None:
         url = f"{BASE_URL}/{id}"
 
-    if method == "GET":
-        response = requests.get(url)
+    methods = {
+        "GET": requests.get,
+        "POST": requests.post,
+        "PUT": requests.put,
+        "PATCH": requests.patch,
+        "DELETE": requests.delete
+    }
 
-    elif method == "POST":
-        response = requests.post(url, json=data)
+    request_function = methods.get(method)
 
-    elif method == "PUT":
-        response = requests.put(url, json=data)
-    elif method== "PATCH":
-        response = requests.patch(url,json=data)
-
-    elif method == "DELETE":
-        response = requests.delete(url)
-
-    else:
-        print("Invalid method")
-        return
+    response = request_function(url, json=data)
 
     print("Status Code:", response.status_code)
 
     if response.content:
         print("Response:", response.json())
+
+
 do("GET")
 do("GET", id=1)
 do("POST", data={"title": "Hi", "body": "Hello", "userId": 1})
-do("PUT", id=1, data={"title": "HI  ALL", "body": "HELLO WORLD", "userId": 1})
-do("PATCH", id=1, data={"title": "HI TO ALL", "body": "HELLO WORLD", "userId": 1})
+do("PUT", id=1, data={"title": "HI ALL", "body": "HELLO WORLD", "userId": 1})
+do("PATCH", id=1, data={"title": "HI TO ALL"})
 do("DELETE", id=1)

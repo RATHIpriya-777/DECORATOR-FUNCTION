@@ -8,7 +8,7 @@ The decorator captures the start time, end time, and calculates the total runtim
 
 
 
-🧠 Key Concept Used:
+Concepts Used:
 
 	Python Decorators
 
@@ -18,7 +18,7 @@ The decorator captures the start time, end time, and calculates the total runtim
 
 
 
-🧩 How the Code Works
+ How the Code Works
 
 The calc_time decorator takes a function as input.
 
@@ -69,7 +69,7 @@ print(run_function())
 
 
 
-📤 Sample Output
+Sample Output:
 
 
 Run started

@@ -2,65 +2,37 @@ import requests
 
 BASE_URL = "https://jsonplaceholder.typicode.com/posts"
 
-# ---------- GET METHOD ----------
-def get_posts():
-    response = requests.get(BASE_URL)
-    print("GET Status:", response.status_code)
-    print(response.json()[:2])  # show only first 2 posts
+def do(method, id=None, data=None):
+    url = BASE_URL
 
+    if id is not None:
+        url = f"{BASE_URL}/{id}"
 
-# ---------- GET by ID ----------
-def get_post_by_id(post_id):
-    response = requests.get(f"{BASE_URL}/{post_id}")
-    print("GET by ID Status:", response.status_code)
-    print(response.json())
+    if method == "GET":
+        response = requests.get(url)
 
+    elif method == "POST":
+        response = requests.post(url, json=data)
 
-# ---------- POST METHOD ----------
-def create_post():
-    data = {
-        "title": "My New Post",
-        "body": "This post is created using Python",
-        "userId": 1
-    }
-    response = requests.post(BASE_URL, json=data)
-    print("POST Status:", response.status_code)
-    print(response.json())
+    elif method == "PUT":
+        response = requests.put(url, json=data)
+    elif method== "PATCH":
+        response = requests.patch(url,json=data)
 
+    elif method == "DELETE":
+        response = requests.delete(url)
 
-# ---------- PUT METHOD ----------
-def update_post_put(post_id):
-    data = {
-        "title": "Updated Title",
-        "body": "Updated Body",
-        "userId": 1
-    }
-    response = requests.put(f"{BASE_URL}/{post_id}", json=data)
-    print("PUT Status:", response.status_code)
-    print(response.json())
+    else:
+        print("Invalid method")
+        return
 
+    print("Status Code:", response.status_code)
 
-# ---------- PATCH METHOD ----------
-def update_post_patch(post_id):
-    data = {
-        "title": "Partially Updated Title"
-    }
-    response = requests.patch(f"{BASE_URL}/{post_id}", json=data)
-    print("PATCH Status:", response.status_code)
-    print(response.json())
-
-
-# ---------- DELETE METHOD ----------
-def delete_post(post_id):
-    response = requests.delete(f"{BASE_URL}/{post_id}")
-    print("DELETE Status:", response.status_code)
-
-
-# ---------- RUN METHODS ----------
-if __name__ == "__main__":
-    get_posts()
-    get_post_by_id(1)
-    create_post()
-    update_post_put(1)
-    update_post_patch(1)
-    delete_post(1)
+    if response.content:
+        print("Response:", response.json())
+do("GET")
+do("GET", id=1)
+do("POST", data={"title": "Hi", "body": "Hello", "userId": 1})
+do("PUT", id=1, data={"title": "HI  ALL", "body": "HELLO WORLD", "userId": 1})
+do("PATCH", id=1, data={"title": "HI TO ALL", "body": "HELLO WORLD", "userId": 1})
+do("DELETE", id=1)
